@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  tx-builder:
+    container_name: tx-builder
+    image: tx-builder:local
+    build:
+      context: ../..
+      dockerfile: apps/tx-builder/Dockerfile
+    restart: unless-stopped
+    ports:
+      - '3005:80'
+    environment:
+      - TZ=Asia/Seoul
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost/tx-builder/manifest.json >/dev/null 2>&1 || exit 1']
+      interval: 30s
+      timeout: 5s
+      retries: 3

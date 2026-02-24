@@ -21,13 +21,15 @@ interface GatewayContractResponse {
 
 const METADATA_FILE = 'metadata.json'
 const DEFAULT_TIMEOUT = 10000
+const SOURCIFY_BASE_URL = import.meta.env.VITE_SOURCIFY_BASE_URL || 'https://sourcify.dev/server'
+const GATEWAY_BASE_URL = import.meta.env.VITE_GATEWAY_BASE_URL || 'https://safe-client.safe.global'
 
 const getProviderURL = (chain: string, address: string, urlProvider: PROVIDER): string => {
   switch (urlProvider) {
     case PROVIDER.SOURCIFY:
-      return `https://sourcify.dev/server/files/${chain}/${address}`
+      return `${SOURCIFY_BASE_URL}/files/${chain}/${address}`
     case PROVIDER.GATEWAY:
-      return `https://safe-client.safe.global/v1/chains/${chain}/contracts/${address}`
+      return `${GATEWAY_BASE_URL}/v1/chains/${chain}/contracts/${address}`
     default:
       throw new Error('The Provider is not supported')
   }
